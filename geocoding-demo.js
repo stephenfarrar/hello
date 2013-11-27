@@ -32,23 +32,30 @@ function log(msg) {
 // TODO(florenciai): Write other functions to make geocoding work. When the
 // geocoding is done, call handleGeocodeResult().
 
-function geocodeAddress(e){ 
+function geocodeAddress(e){
+  //if the user press enter 
   if(e.keyCode == 13){
-    console.log("Hi");
+    //get the address
     address = document.getElementById("query").value;
+    
+    //create the geocode
     var geocoder = new google.maps.Geocoder();
     var request = {
       address: address
     };
+
     geocoder.geocode(request, function(results, status){
       if(status == google.maps.GeocoderStatus.OK){
+        //if there is multiple result
         if(results.length>1){
           handleMultipleResults(address);
         } else {
+          //only one result
           var latLng = results[0].geometry.location;
           handleGeocodeResult(latLng, address);
         }
       } else {
+        //not a valid address
         handleGeocodeFailure(address);
       }
     }); 
