@@ -26,7 +26,7 @@ function handleGeocodeResult(latLng, address) {
 
 function log(msg) {
   var log = document.getElementById('log');
-  log.innerHTML = log.innerHTML + '<div>' + msg + '</div>';
+  log.innerHTML = '<div>' + msg + '</div>';
 }
 
 // TODO(florenciai): Write other functions to make geocoding work. When the
@@ -42,8 +42,12 @@ function geocodeAddress(e){
     };
     geocoder.geocode(request, function(results, status){
       if(status == google.maps.GeocoderStatus.OK){
-        var latLng = results[0].geometry.location;
-        handleGeocodeResult(latLng, address);
+        if(results.length>1){
+          handleMultipleResults(address);
+        } else {
+          var latLng = results[0].geometry.location;
+          handleGeocodeResult(latLng, address);
+        }
       } else {
         handleGeocodeFailure(address);
       }
@@ -54,13 +58,13 @@ function geocodeAddress(e){
 //function to handle invalid input
 //i.e. when geocode returns NO result
 function handleGeocodeFailure(address) {
-  log('Sorry, ' + address + 'is not a valid address');
+  log('Sorry, ' + address + ' is not a valid address');
 }
 
 //possible function to handle multiple results?
-/*
+
 function handleMultipleResults(address) {
   alert('Sorry, your query - ' + address + ' - returned multiple results');
   log('Please refine your search.');
 }
-*/
+
