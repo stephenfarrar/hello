@@ -31,7 +31,7 @@ function log(msg) {
 
 // TODO(florenciai): Write other functions to make geocoding work. When the
 // geocoding is done, call handleGeocodeResult().
-<<<<<<< HEAD
+
 function geocodeAddress(e){ 
   if(e.keyCode == 13){
     console.log("Hi");
@@ -51,10 +51,6 @@ function geocodeAddress(e){
   } 
 }
 
-function handleGeocodeFailure(address) {
-  
-}
-=======
 
 
 //function to handle invalid input
@@ -70,4 +66,4 @@ function handleMultipleResults(address) {
   log('Please refine your search.');
 }
 */
->>>>>>> d8940133de39bec20dec9eeedd157434dc7d4aeb
+
