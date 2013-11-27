@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Geocoding Demo</title>
+    <title>Marker Events</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -22,35 +22,49 @@
         background-color: black;
         opacity: 0.8;
       }
+      #buttons {
+        position: absolute;
+        bottom: 30px;
+        left: 10px;
+      }
+      #button {
+        background-color: white;
+      }
       #query {
         bottom: 20px;
         height: 20px;
       }
-      #log {
+      #logGeo {
         bottom: 60px;
         max-height: 50%;
         overflow-y: scroll;
       }
+       #logMarker {
+        display: block;
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        padding: 10px;
+        border-width: 1px;
+        border-style: solid;
+        color: white;
+        background-color: black;
+        overflow-y: scroll;
+      }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <script src="geocoding-demo.js"></script>
-    <script>
-    google.maps.event.addDomListener(window, 'load', function initialize() {
-
-    map = new google.maps.Map(document.getElementById('map-canvas'), {
-        zoom: 12,
-        center: new google.maps.LatLng(-33.8683, 151.2086),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-    document.getElementById("log").style.visibility = "hidden";
-
-});
-    </script>
+    <script src="two-pages.js"></script>
   </head>
   <body>
     <div id="map-canvas"></div>
+    <div id="logMarker"><div>Log:</div></div>
     <input class="card" id="query" onkeypress="return geocodeAddress(event)"></input>
-    <div class="card" id="log"><div>Please Enter The Address Below:</div></div>
+    <div class="card" id="logGeo"><div>Please Enter The Address Below:</div></div>
+    <div id="buttons">
+      <input type="button" id="marker" value="Marker" onclick="buttonMarker()"></input>
+      <input type="button" id="geoCode" value="Geocode" onclick="geoButton()"></input>
+    </div>
   </body>
 </html>
+
 
