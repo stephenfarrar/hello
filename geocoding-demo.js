@@ -51,8 +51,6 @@ function geocodeAddress(e){
   } 
 }
 
-
-
 //function to handle invalid input
 //i.e. when geocode returns NO result
 function handleGeocodeFailure(address) {
@@ -66,4 +64,3 @@ function handleMultipleResults(address) {
   log('Please refine your search.');
 }
 */
-
