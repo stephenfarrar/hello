@@ -112,8 +112,6 @@ function handleGeocodeResult(latLng, address) {
     content: addressBox
   });
   infoWindow.open(map, marker);
-  
-  //window.alert(address + ': ' + latLng)
 }
 
 function logGeo(msg) {
