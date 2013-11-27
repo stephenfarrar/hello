@@ -32,7 +32,6 @@ function log(msg) {
 // TODO(florenciai): Write other functions to make geocoding work. When the
 // geocoding is done, call handleGeocodeResult().
 
-
 //function to handle invalid input
 //i.e. when geocode returns NO result
 function handleGeocodeFailure(address) {
