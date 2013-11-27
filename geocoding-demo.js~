@@ -39,10 +39,4 @@ function handleGeocodeFailure(address) {
   log('Sorry, ' + address + 'is not a valid address');
 }
 
-//possible function to handle multiple results?
-/*
-function handleMultipleResults(address) {
-  alert('Sorry, your query - ' + address + ' - returned multiple results');
-  log('Please refine your search.');
-}
-*/
+
