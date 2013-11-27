@@ -31,6 +31,30 @@ function log(msg) {
 
 // TODO(florenciai): Write other functions to make geocoding work. When the
 // geocoding is done, call handleGeocodeResult().
+<<<<<<< HEAD
+function geocodeAddress(e){ 
+  if(e.keyCode == 13){
+    console.log("Hi");
+    address = document.getElementById("query").value;
+    var geocoder = new google.maps.Geocoder();
+    var request = {
+      address: address
+    };
+    geocoder.geocode(request, function(results, status){
+      if(status == google.maps.GeocoderStatus.OK){
+        var latLng = results[0].geometry.location;
+        handleGeocodeResult(latLng, address);
+      } else {
+        handleGeocodeFailure(address);
+      }
+    }); 
+  } 
+}
+
+function handleGeocodeFailure(address) {
+  
+}
+=======
 
 //function to handle invalid input
 //i.e. when geocode returns NO result
@@ -45,3 +69,4 @@ function handleMultipleResults(address) {
   log('Please refine your search.');
 }
 */
+>>>>>>> d8940133de39bec20dec9eeedd157434dc7d4aeb
