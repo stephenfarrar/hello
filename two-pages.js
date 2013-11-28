@@ -123,6 +123,11 @@ function logGeoAdd(msg) {
   logGeoAdd.innerHTML = logGeoAdd.innerHTML+'<div>' + msg + '</div>';
 }
 
+function logGeoInLine(msg) {
+  var logGeoInLine = document.getElementById('logGeo');
+  logGeoInLine.innerHTML = logGeoInLine.innerHTML+' ' + msg;
+}
+
 // TODO(florenciai): Write other functions to make geocoding work. When the
 // geocoding is done, call handleGeocodeResult().
 
@@ -162,10 +167,16 @@ function handleGeocodeFailure(address) {
   logGeo('Sorry, ' + address + ' is not a valid address');
 }
 
-//possible function to handle multiple results?
+//function to handle multiple results
 
 function handleMultipleResults(address, result) {
- 
-  logGeo('Please refine your search.');
+  logGeo('Sorry, your query "' + address + '" returned multiple results:<br>');
+  for (var i = 0; i<result.length; i++) {
+    for (var j = 0; j<result[i].address_components.length; j++){
+      logGeoInLine (result[i].address_components[j].long_name);
+    }
+     logGeoInLine("<br>"); 
+  }
+  logGeoAdd('<br>Please refine your search.');
 }
 

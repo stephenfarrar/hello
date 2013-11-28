@@ -29,8 +29,6 @@
         left: 10px;
         padding: 10px;
         bottom: 60px;
-        background-color: green;
-        opacity:0.2;
       }
 			#marker {
         background-color: yellow;
@@ -38,7 +36,6 @@
         height: 40px;
         font-size: 25px;
         font-weight: bold;
-        opacity:0.8;
       }
       #marker:hover{
         background-color: red;
@@ -50,7 +47,6 @@
         height: 40px;
         font-size: 25px;
         font-weight: bold;
-        opacity:0.8;
       }
       #geoCode:hover{
         background-color: blue;
