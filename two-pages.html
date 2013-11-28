@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Marker Events</title>
+    <title>Tutorial</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
-      html, body, #map-canvas {
+      html, body, #map-canvas-geo, #map-canvas-marker, #map-canvas-initial {
         margin: 0;
         padding: 0;
         height: 94%;
@@ -64,6 +64,18 @@
         background-color: blue;
         color: white;
       }
+      #refresh{
+        background-color: yellow;
+        width: 150px;
+        height: 40px;
+        font-size: 25px;
+        font-weight: bold;
+        opacity:0.8;
+      }
+      #refresh:hover{
+        background-color: purple;
+        color: white;
+      }
       .button:hover {
         background-color: orange;
       }
@@ -93,18 +105,24 @@
     <script src="two-pages.js"></script>
   </head>
   <body>
+
+
     <div id="instructions">
     <p>Welcome to our interactive Google Maps API demo tutorial!<br>
        Please select a lesson from the bottom left by clicking a button.<br>
        Enjoy!
     </div>
-    <div id="map-canvas"></div>
+    <div id="map-canvas-initial"><div></div></div>
+    <div id="map-canvas-geo"><div></div></div>
+    <div id="map-canvas-marker"><div></div></div>
+
     <div id="logMarker"><div>Log:</div></div>
     <input class="card" id="query" onkeypress="return geocodeAddress(event)"></input>
     <div class="card" id="logGeo"><div>Please Enter The Address Below:</div></div>
     <div id="buttons">
-      <input type="button" id="marker" value="Marker" onclick="buttonMarker()"></input><br>
-      <input type="button" id="geoCode" value="Geocode" onclick="geoButton()"></input>
+      <input type="button" id="marker" value="Marker" onclick="updateMarker()"></input><br>
+      <input type="button" id="geoCode" value="Geocode" onclick="updateGeo()"></input><br>
+      <input type="button" id="refresh" value="Refresh" onclick="refresh()"></input>
     </div>
   </body>
 </html>

@@ -1,4 +1,6 @@
-var map;
+var mapGeo = 0;
+var mapMarker = 0;
+var map = 0;
 var iconColours = [
   "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
@@ -7,39 +9,76 @@ var iconColours = [
   "http://maps.google.com/mapfiles/ms/icons/green-dot.png"];
 
 google.maps.event.addDomListener(window, 'load', function initialize() {
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
+  hideAll();
+  map = new google.maps.Map(document.getElementById('map-canvas-initial'), {
     zoom: 12,
     center: new google.maps.LatLng(-33.8683, 151.2086),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-  buttonMarker();
+  
+  document.getElementById("map-canvas-initial").style.display = "block";
   
 });
 
+function refresh(){
+  if(document.title == "Marker Events"){
+    buttonMarker();
+  } else if (document.title == "Geocoding"){
+    geoButton();
+  } else {
+    hideAll();
+    document.getElementById("map-canvas-initial").style.display = "block";
+  }
+}
 function hideAll() {
   document.getElementById("query").style.display = "none";
   document.getElementById("logGeo").style.display = "none";
   document.getElementById("logMarker").style.display = "none";
+  document.getElementById("map-canvas-marker").style.display = "none";
+  document.getElementById("map-canvas-geo").style.display = "none";
+  document.getElementById("map-canvas-initial").style.display = "none";
+}
+//function to update marker
+function updateMarker(){
+  hideAll();
+  if (mapMarker === 0) {
+    console.log ("yes!");
+    buttonMarker();
+  } else {
+    
+    document.title = "Marker Events";
+    document.getElementById("logMarker").style.display = "block";
+    document.getElementById("map-canvas-marker").style.display = "block";
+  }
 }
 
+//function to refresh marker
 function buttonMarker(){
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
+  
+  mapMarker = new google.maps.Map(document.getElementById('map-canvas-marker'), {
     zoom: 12,
     center: new google.maps.LatLng(-33.8683, 151.2086),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
+ 
   hideAll();
   document.title = "Marker Events";
   instructions.innerHTML = "Marker Events:<br> In this tutorial, you can use the map given " +
                            "to create a new marker icon when the map is clicked.<br>" +
                            "These icons can by customised to be different colours, as seen below.";
   document.getElementById("logMarker").style.display = "block";
+  document.getElementById("map-canvas-marker").style.display = "block";
+  
   marker = new google.maps.Marker({
     position: new google.maps.LatLng(-33.87, 151.21),
     draggable: true,
-    map: map
+    map: mapMarker
   });
-				
+  //refresh the log
+	var logMarkerdiv = document.getElementById('logMarker');
+  logMarkerdiv.innerHTML = 'Log:';
+
+
   ['click', 'dblclick', 'mouseover', 'mouseout', 'mousedown', 'mouseup',
    'rightclick'].forEach(function(event) {
     google.maps.event.addListener(marker, event, function() {
@@ -49,7 +88,7 @@ function buttonMarker(){
 				
   //adding new markers on every place clicked on the map
   var i = 0;
-  google.maps.event.addListener(map, 'click', function(pos){
+  google.maps.event.addListener(mapMarker, 'click', function(pos){
     createNewMarker(pos.latLng, ++i);
   });			
 }
@@ -58,7 +97,7 @@ function createNewMarker(pos, i){
   i = i % 5;
   var markerOptions = {
     position: pos,
-    map: map,
+    map: mapMarker,
     draggable: true
   };
         
@@ -80,27 +119,50 @@ function logMarker(msg) {
 
 //************************ GEOCODE FUNCTIONS ***************************//
 
+//function to update Geo
+function updateGeo(){
+  if (mapGeo === 0){
+    geoButton();
+  } else {
+    hideAll();
+    document.title = "Geocoding";
+    document.getElementById("query").style.display = "block";
+    document.getElementById("logGeo").style.display = "block";
+    document.getElementById("map-canvas-geo").style.display = "block";
+  }
+}
+
+//function to refresh Geo
 function geoButton(){
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
+  mapGeo = new google.maps.Map(document.getElementById('map-canvas-geo'), {
     zoom: 12,
     center: new google.maps.LatLng(-33.8683, 151.2086),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
   hideAll();
+  //document.getElementById("logMarker").style.display = "none";
+ // document.getElementById("map-canvas-marker").style.display = "none";
+	//refreshing the logs and the query
+  var logGeo = document.getElementById('logGeo');
+  logGeo.innerHTML = 'Please Enter The Address Below:';
+  var query = document.getElementById('query');
+  query.value = ' ';
+
   document.title = "Geocoding";
   instructions.innerHTML = "Geocoding:<br> Geocoding is a feature of maps that correlates " + "an address (or part of an address) with its geographic coordinates. <br>" + "Try typing an address in the box on the bottom right!";
   document.getElementById("query").style.display = "block";
   document.getElementById("logGeo").style.display = "block";
+  document.getElementById("map-canvas-geo").style.display = "block";
 }
 
 function handleGeocodeResult(latLng, address) {
   // TODO(olrichandrea): Write this function.
   //move to spot
-  map.panTo(latLng);
+  mapGeo.panTo(latLng);
   // - Place a marker on the map.
   var marker = new google.maps.Marker({
 	  position: latLng,
-    map: map
+    map: mapGeo
 	});
   
   // - Write something in the log.
@@ -114,7 +176,7 @@ function handleGeocodeResult(latLng, address) {
     position: latLng,
     content: addressBox
   });
-  infoWindow.open(map, marker);
+  infoWindow.open(mapGeo, marker);
 }
 
 function logGeo(msg) {
