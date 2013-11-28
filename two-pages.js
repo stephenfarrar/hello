@@ -42,7 +42,7 @@ function hideAll() {
 function updateMarker(){
   hideAll();
   if (mapMarker === 0) {
-    console.log ("yes!");
+     document.getElementById("map-canvas-marker").style.display = "block";
     buttonMarker();
   } else {
     
@@ -122,6 +122,7 @@ function logMarker(msg) {
 //function to update Geo
 function updateGeo(){
   if (mapGeo === 0){
+    document.getElementById("map-canvas-geo").style.display = "block";
     geoButton();
   } else {
     hideAll();
