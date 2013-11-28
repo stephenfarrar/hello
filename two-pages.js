@@ -7,7 +7,6 @@ var iconColours = [
   "http://maps.google.com/mapfiles/ms/icons/green-dot.png"];
 
 google.maps.event.addDomListener(window, 'load', function initialize() {
-
   map = new google.maps.Map(document.getElementById('map-canvas'), {
     zoom: 12,
     center: new google.maps.LatLng(-33.8683, 151.2086),
@@ -119,6 +118,11 @@ function logGeo(msg) {
   logGeo.innerHTML = '<div>' + msg + '</div>';
 }
 
+function logGeoAdd(msg) {
+  var logGeoAdd = document.getElementById('logGeo');
+  logGeoAdd.innerHTML = logGeoAdd.innerHTML+'<div>' + msg + '</div>';
+}
+
 // TODO(florenciai): Write other functions to make geocoding work. When the
 // geocoding is done, call handleGeocodeResult().
 
@@ -138,7 +142,7 @@ function geocodeAddress(e){
       if(status == google.maps.GeocoderStatus.OK){
         //if there is multiple result
         if(results.length>1){
-          handleMultipleResults(address);
+          handleMultipleResults(address, results);
         } else {
           //only one result
           var latLng = results[0].geometry.location;
@@ -160,8 +164,8 @@ function handleGeocodeFailure(address) {
 
 //possible function to handle multiple results?
 
-function handleMultipleResults(address) {
-  alert('Sorry, your query - ' + address + ' - returned multiple results');
+function handleMultipleResults(address, result) {
+ 
   logGeo('Please refine your search.');
 }
 
