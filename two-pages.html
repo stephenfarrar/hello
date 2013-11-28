@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Marker Events</title>
+    <title>Tutorial</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
-      html, body, #map-canvas-geo, #map-canvas-marker {
+      html, body, #map-canvas-geo, #map-canvas-marker, #map-canvas-initial {
         margin: 0;
         padding: 0;
         height: 94%;
@@ -112,8 +112,9 @@
        Please select a lesson from the bottom left by clicking a button.<br>
        Enjoy!
     </div>
-    <div id="map-canvas-geo"></div>
-    <div id="map-canvas-marker"></div>
+    <div id="map-canvas-initial"><div></div></div>
+    <div id="map-canvas-geo"><div></div></div>
+    <div id="map-canvas-marker"><div></div></div>
 
     <div id="logMarker"><div>Log:</div></div>
     <input class="card" id="query" onkeypress="return geocodeAddress(event)"></input>
