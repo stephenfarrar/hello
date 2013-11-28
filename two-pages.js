@@ -138,7 +138,7 @@ function geocodeAddress(e){
       if(status == google.maps.GeocoderStatus.OK){
         //if there is multiple result
         if(results.length>1){
-          handleMultipleResults(address);
+          handleMultipleResults(address, results);
         } else {
           //only one result
           var latLng = results[0].geometry.location;
@@ -158,10 +158,10 @@ function handleGeocodeFailure(address) {
   logGeo('Sorry, ' + address + ' is not a valid address');
 }
 
-//possible function to handle multiple results?
+//function to handle multiple results
 
-function handleMultipleResults(address) {
-  alert('Sorry, your query - ' + address + ' - returned multiple results');
-  logGeo('Please refine your search.');
+function handleMultipleResults(address, results) {
+  logGeo('Sorry, your query "' + address + '" returned multiple results:<br>');
+  logGeoAdd('<br>Please refine your search.');
 }
 
