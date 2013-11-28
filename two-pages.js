@@ -52,6 +52,9 @@ function buttonMarker(){
  
   hideAll();
   document.title = "Marker Events";
+  instructions.innerHTML = "Marker Events:<br> In this tutorial, you can use the map given " +
+                           "to create a new marker icon when the map is clicked.<br>" +
+                           "These icons can by customised to be different colours, as seen below.";
   document.getElementById("logMarker").style.display = "block";
   document.getElementById("map-canvas-marker").style.display = "block";
   
@@ -132,6 +135,7 @@ function geoButton(){
   query.value = ' ';
 
   document.title = "Geocoding";
+  instructions.innerHTML = "Geocoding:<br> Geocoding is a feature of maps that correlates " + "an address (or part of an address) with its geographic coordinates. <br>" + "Try typing an address in the box on the bottom right!";
   document.getElementById("query").style.display = "block";
   document.getElementById("logGeo").style.display = "block";
   document.getElementById("map-canvas-geo").style.display = "block";
