@@ -8,7 +8,7 @@
       html, body, #map-canvas {
         margin: 0;
         padding: 0;
-        height: 100%;
+        height: 94%;
       }
       .card {
         display: block;
@@ -21,6 +21,14 @@
         color: white;
         background-color: black;
         opacity: 0.8;
+      }
+      #instructions {
+        height: 19%;
+        border: 0.5em solid green;
+        background-color: black;
+        color: white;
+        padding: 20px;
+        font-size: 20px;
       }
       #buttons {
         display: block;
@@ -85,6 +93,11 @@
     <script src="two-pages.js"></script>
   </head>
   <body>
+    <div id="instructions">
+    <p>Welcome to our interactive Google Maps API demo tutorial!<br>
+       Please select a lesson from the bottom left by clicking a button.<br>
+       Enjoy!
+    </div>
     <div id="map-canvas"></div>
     <div id="logMarker"><div>Log:</div></div>
     <input class="card" id="query" onkeypress="return geocodeAddress(event)"></input>
