@@ -216,7 +216,7 @@ function geocodeAddress(e){
         } else {
           //only one result
           var latLng = results[0].geometry.location;
-          handleGeocodeResult(latLng, address);
+          handleGeocodeResult(latLng, results[0].formatted_address);
         }
       } else {
         //not a valid address
