@@ -134,6 +134,7 @@ function hideAll() {
 function refreshIntro(){
   hideAll();
   activeIndex = 0;
+  document.title = lessonArray[activeIndex].title;
   document.getElementById(lessonArray[activeIndex].divID).style.display = "block";
   document.getElementById("instructions").innerHTML = lessonArray[activeIndex].blurb;
   map = new google.maps.Map(document.getElementById('map-canvas-initial'), {
