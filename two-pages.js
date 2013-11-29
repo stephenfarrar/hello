@@ -1,3 +1,29 @@
+//object to store lesson information
+function Lesson(title, blurb, divID) {
+  this.title: title;
+  this.blurb: blurb;
+  this.divID: divID;
+  this.update = function() {};
+  this.refresh = function() {};
+}
+
+//initialise introduction
+var lesson0 = new Lesson("Tutorial", "Welcome to our interactive Google Maps API demo tutorial!<br>Please select a lesson from the bottom left by clicking a button.<br>Enjoy!", "lesson0-intro");
+lesson0.refresh = refreshIntro;
+lesson0.update = updateIntro;
+
+//initialise marker events
+var lesson1 = new Lesson("Marker Events", "Marker Events:<br> In this tutorial, you can use the map given " + "to create a new marker icon when the map is clicked.<br>" + "These icons can by customised to be different colours, as seen below.");
+lesson1.refresh = refreshMarker;
+lesson1.update = updateMarker;
+
+//initialise geocoding
+var lesson2 = new Lesson("Geocoding", "Geocoding:<br> Geocoding is a feature of maps that correlates " + "an address (or part of an address) with its geographic coordinates. <br>" + "Try typing an address in the box on the bottom right!");
+lesson2.refresh = refreshGeo;
+lesson2.update = updateGeo;
+
+var lessonArray = [lesson0, lesson1, lesson2];
+
 var mapGeo = 0;
 var mapMarker = 0;
 var map = 0;
