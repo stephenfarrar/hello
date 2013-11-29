@@ -55,15 +55,14 @@ var lessonsClass = document.getElementsByClassName("lesson");
 //YOU CAN ADD MORE COLORS
 var color = ['red', 'blue', 'purple'];
 
-
-//**********************START OF FUNCTIONS + MAIN FUNCTIONS******************************************
+//**********************START OF FUNCTIONS + MAIN FUNCTIONS*******************//
 google.maps.event.addDomListener(window, 'load', function initialize(){
-  //CREATING BUTTONS
+  //Creating buttons
   for (var i=0; i<lessonsClass.length; i++){
     makeButton(lessonsClass[i].id, i);
   }
-  
-  //create refresh button
+
+  //Create refresh button
   var button = document.getElementById("buttons");
   var newButton = document.createElement("input");
   newButton.type = "button";
@@ -73,8 +72,6 @@ google.maps.event.addDomListener(window, 'load', function initialize(){
     refresh();
   };
   button.appendChild(newButton);
-  
-  //button.innerHTML = button.innerHTML + "<input type=\"button\" id=\"refresh\" value=\"Refresh\" onclick=\"refresh()\"></input><br>";
   var buttonElement = document.getElementById("refresh");
   buttonStyle (buttonElement, lessonsClass.length);
 
@@ -130,7 +127,7 @@ function hideAll() {
   }
 }
 
-//************************ INTRODUCTION FUNCTION ****************************//
+//************************ INTRODUCTION FUNCTIONS ****************************//
 function refreshIntro(){
   hideAll();
   activeIndex = 0;
@@ -201,7 +198,7 @@ function createNewMarker(pos, i){
     map: mapMarker,
     draggable: true
   };
-        
+
   var newMarker = new google.maps.Marker(markerOptions);
   newMarker.setIcon(iconColours[i]);
 
@@ -210,7 +207,7 @@ function createNewMarker(pos, i){
     google.maps.event.addListener(newMarker, event, function() {
       logMarker(event);
     });
-  });      
+  });
 }
 
 function logMarker(msg) {
@@ -218,7 +215,7 @@ function logMarker(msg) {
   logMarker.innerHTML = logMarker.innerHTML + '<div>' + msg + '</div>';
 }
 
-//************************ GEOCODE FUNCTIONS ***************************//
+//*************************** GEOCODE FUNCTIONS ******************************//
 
 //function to update Geo
 function updateGeo(){
@@ -275,9 +272,6 @@ function logGeoAdd(msg) {
   logGeoAdd.innerHTML = logGeoAdd.innerHTML+'<div>' + msg + '</div>';
 }
 
-// TODO(florenciai): Write other functions to make geocoding work. When the
-// geocoding is done, call handleGeocodeResult().
-
 function geocodeAddress(e){
   activeIndex = 2;
   //if the user press enter 
@@ -305,8 +299,8 @@ function geocodeAddress(e){
         //not a valid address
         handleGeocodeFailure(address);
       }
-    }); 
-  } 
+    });
+  }
 }
 
 //function to handle invalid input
