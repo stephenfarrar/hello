@@ -52,6 +52,7 @@ function makeButton(string, i){
 }
 
 function refresh(){
+  
   lessonArray[activeIndex].refresh();
 }
 
@@ -204,6 +205,7 @@ function logGeoAdd(msg) {
 // geocoding is done, call handleGeocodeResult().
 
 function geocodeAddress(e){
+  activeIndex = 2;
   //if the user press enter 
   if(e.keyCode == 13){
     //get the address
