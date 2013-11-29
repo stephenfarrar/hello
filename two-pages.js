@@ -10,7 +10,7 @@ function Lesson(title, blurb, divID) {
 //initialise introduction
 var lesson0 = new Lesson("Tutorial", "Welcome to our interactive Google Maps API demo tutorial!<br>Please select a lesson from the bottom left by clicking a button.<br>Enjoy!", "lesson0-intro");
 lesson0.refresh = refreshIntro;
-lesson0.update = updateIntro;
+lesson0.update = refreshIntro;
 
 //initialise marker events
 var lesson1 = new Lesson("Marker Events", "Marker Events:<br> In this tutorial, you can use the map given " + "to create a new marker icon when the map is clicked.<br>" + "These icons can by customised to be different colours, as seen below.");
@@ -27,13 +27,14 @@ var lessonArray = [lesson0, lesson1, lesson2];
 var mapGeo = 0;
 var mapMarker = 0;
 var map = 0;
-var activeTitle;
+var activeIndex = 0;
 var iconColours = [
   "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/green-dot.png"];
+
 //find the lessons
 var lessonsClass = document.getElementByClassName("lesson");
 
@@ -44,34 +45,14 @@ google.maps.event.addDomListener(window, 'load', function initialize() {
   for (var i=0; i<lessonsClass.length; i++){
     makeButton(lessonClass[i].id, i);
   }
-  //to be replaced by the introduction refresh function
-  /*
-  hideAll();
-  
-  map = new google.maps.Map(document.getElementById('map-canvas-initial'), {
-    zoom: 12,
-    center: new google.maps.LatLng(-33.8683, 151.2086),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  });
-  
-  document.getElementById("map-canvas-initial").style.display = "block";
-  */
 });
 
 function makeButton(string, i){
   var button = document.getElementById("
 }
 
-
 function refresh(){
-  if(document.title == "Marker Events"){
-    buttonMarker();
-  } else if (document.title == "Geocoding"){
-    geoButton();
-  } else {
-    hideAll();
-    document.getElementById("map-canvas-initial").style.display = "block";
-  }
+  lessonArray[activeIndex].refresh();
 }
 
 //BLOCKING ALL DIVS AUTOMATICALLY
@@ -81,64 +62,63 @@ function hideAll() {
   }
 }
 
+function refreshIntro(){
+  hideAll();
+  activeIndex = 0;
+  map = new google.maps.Map(document.getElementById('map-canvas-initial'), {
+    zoom: 12,
+    center: new google.maps.LatLng(-33.8683, 151.2086),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+  document.getElementById("map-canvas-initial").style.display = "block";  
+}
+
+//************************ MARKER EVENTS FUNCTIONS ***************************//
 
 //function to update marker
 function updateMarker(){
   hideAll();
+  activeIndex = 1;
+  document.getElementById("lesson1-marker").style.display = "block";
+  document.title = lessonArray[activeIndex].title;
+  document.getElementById("instructions").innerHTML = lessonArray[activeIndex].blurb;
   if (mapMarker === 0) {
-     document.getElementById("map-canvas-marker").style.display = "block";
-     refreshMarker();
-  } else {
-    document.title = "Marker Events";
-    document.getElementById("logMarker").style.display = "block";
-    document.getElementById("map-canvas-marker").style.display = "block";
-    document.getElementById("instructions").innerHTML = "Marker Events:<br> In this tutorial, you can use the map given " +
-                           "to create a new marker icon when the map is clicked.<br>" +
-                           "These icons can by customised to be different colours, as seen below.";
+    refreshMarker();
   }
 }
 
 //function to refresh marker
 function refreshMarker(){
-  
+  //refresh the map
+  hideAll();
   mapMarker = new google.maps.Map(document.getElementById('map-canvas-marker'), {
     zoom: 12,
     center: new google.maps.LatLng(-33.8683, 151.2086),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
- 
-  hideAll();
-  document.title = "Marker Events";
-  document.getElementById("instructions").innerHTML = "Marker Events:<br> In this tutorial, you can use the map given " +
-                           "to create a new marker icon when the map is clicked.<br>" +
-                           "These icons can by customised to be different colours, as seen below.";
-  document.getElementById("logMarker").style.display = "block";
-  document.getElementById("map-canvas-marker").style.display = "block";
-  
   marker = new google.maps.Marker({
     position: new google.maps.LatLng(-33.87, 151.21),
     draggable: true,
     map: mapMarker
   });
+
   //refresh the log
-	var logMarkerdiv = document.getElementById('logMarker');
+  var logMarkerdiv = document.getElementById('logMarker');
   logMarkerdiv.innerHTML = 'Log:';
-
-
   ['click', 'dblclick', 'mouseover', 'mouseout', 'mousedown', 'mouseup',
    'rightclick'].forEach(function(event) {
     google.maps.event.addListener(marker, event, function() {
       logMarker(event);
     });
   });
-				
+
   //adding new markers on every place clicked on the map
   var i = 0;
   google.maps.event.addListener(mapMarker, 'click', function(pos){
     createNewMarker(pos.latLng, ++i);
-  });			
+  });
 }
-	
+
 function createNewMarker(pos, i){
   i = i % 5;
   var markerOptions = {
@@ -157,7 +137,7 @@ function createNewMarker(pos, i){
     });
   });      
 }
-			
+
 function logMarker(msg) {
   var logMarker = document.getElementById('logMarker');
   logMarker.innerHTML = logMarker.innerHTML + '<div>' + msg + '</div>';
@@ -167,59 +147,42 @@ function logMarker(msg) {
 
 //function to update Geo
 function updateGeo(){
+  hideAll();
+  activeIndex = 2;
+  document.getElementById(lessonArray[activeIndex].divID).style.display = "block";
+  document.title = lessonArray[activeIndex].title;
+  document.getElementById("instructions").innerHTML = lessonArray[activeIndex].blurb;
   if (mapGeo === 0){
-    document.getElementById("map-canvas-geo").style.display = "block";
-    geoButton();
-  } else {
-    hideAll();
-    document.title = "Geocoding";
-    document.getElementById("instructions").innerHTML = "Geocoding:<br> Geocoding is a feature of maps that correlates " + "an address (or part of an address) with its geographic coordinates. <br>" +   "Try typing an address in the box on the bottom right!";
-    document.getElementById("query").style.display = "block";
-    document.getElementById("logGeo").style.display = "block";
-    document.getElementById("map-canvas-geo").style.display = "block";
+    refreshGeo();
   }
 }
 
 //function to refresh Geo
-function refreshGeo(){
+function refreshGeo() {
   mapGeo = new google.maps.Map(document.getElementById('map-canvas-geo'), {
     zoom: 12,
     center: new google.maps.LatLng(-33.8683, 151.2086),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-  hideAll();
-  //document.getElementById("logMarker").style.display = "none";
- // document.getElementById("map-canvas-marker").style.display = "none";
-	//refreshing the logs and the query
+  //refreshing the logs and the query
   var logGeo = document.getElementById('logGeo');
   logGeo.innerHTML = 'Please Enter The Address Below:';
   var query = document.getElementById('query');
   query.value = ' ';
-
-  document.title = "Geocoding";
-   document.getElementById("instructions").innerHTML = "Geocoding:<br> Geocoding is a feature of maps that correlates " + "an address (or part of an address) with its geographic coordinates. <br>" + "Try typing an address in the box on the bottom right!";
-  document.getElementById("query").style.display = "block";
-  document.getElementById("logGeo").style.display = "block";
-  document.getElementById("map-canvas-geo").style.display = "block";
 }
 
 function handleGeocodeResult(latLng, address) {
-  // TODO(olrichandrea): Write this function.
-  //move to spot
+  // - Move to spot
   mapGeo.panTo(latLng);
   // - Place a marker on the map.
   var marker = new google.maps.Marker({
-	  position: latLng,
+    position: latLng,
     map: mapGeo
-	});
-  
+  });
   // - Write something in the log.
   logGeo('Welcome to ' + address + '.');
-  
   // - Make an infowindow on the marker, displaying the address.
-  var addressBox = '<div id="content">'+
-    address + '</div>';
-  
+  var addressBox = '<div id="content">'+ address + '</div>';
   var infoWindow = new google.maps.InfoWindow({
     position: latLng,
     content: addressBox
@@ -277,7 +240,6 @@ function handleGeocodeFailure(address) {
 }
 
 //function to handle multiple results
-
 function handleMultipleResults(address, result) {
   logGeo('Sorry, your query "' + address + '" returned multiple results:<br>');
   for (var i = 0; i<result.length; i++) {
@@ -285,4 +247,3 @@ function handleMultipleResults(address, result) {
   }
   logGeoAdd('<br>Please refine your search.');
 }
-
