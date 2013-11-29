@@ -1,3 +1,5 @@
+//THE GLOBAL VARIABLES
+
 //object to store lesson information
 function Lesson(title, blurb, divID) {
   this.title: title;
@@ -7,10 +9,12 @@ function Lesson(title, blurb, divID) {
   this.refresh = function() {};
 }
 
+//THE LESSONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//THIS NEEDS TO BE UPDATED EVERYTIME THERE ARE NEW LESSONS
 //initialise introduction
 var lesson0 = new Lesson("Tutorial", "Welcome to our interactive Google Maps API demo tutorial!<br>Please select a lesson from the bottom left by clicking a button.<br>Enjoy!", "lesson0-intro");
 lesson0.refresh = refreshIntro;
-lesson0.update = updateIntro;
+lesson0.update = refreshIntro;
 
 //initialise marker events
 var lesson1 = new Lesson("Marker Events", "Marker Events:<br> In this tutorial, you can use the map given " + "to create a new marker icon when the map is clicked.<br>" + "These icons can by customised to be different colours, as seen below.");
@@ -22,47 +26,73 @@ var lesson2 = new Lesson("Geocoding", "Geocoding:<br> Geocoding is a feature of 
 lesson2.refresh = refreshGeo;
 lesson2.update = updateGeo;
 
+//THE LESSONS ARRAY
 var lessonArray = [lesson0, lesson1, lesson2];
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+//INITIALIZE THE MAPS
+//NEEDS TO BE UPDATED IN EACH LESSON -> EACH LESSON WILL HAVE ITS OWN MAP
 var mapGeo = 0;
 var mapMarker = 0;
 var map = 0;
-var activeTitle;
+
+//INFORMATION ABOUT THE LESSON THAT IS ACTIVE -> NEED TO BE UPDATED IN EACH REFRESH/UPDATE FUNCTIONS
+var activeIndex = 0;
+
+//COLOURFUL MAP ICONS
 var iconColours = [
   "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/green-dot.png"];
-//find the lessons
+
+//FINDING ALL THE LESSONS OBJECT
 var lessonsClass = document.getElementByClassName("lesson");
 
+//VARYING BUTTON HOVER COLORS
+var color = ['red', 'blue', 'purple'];
 
-google.maps.event.addDomListener(window, 'load', function initialize() {
+
+
+google.maps.event.addDomListener(window, 'load', function initialize() 
   //CREATING BUTTONS
-  
   for (var i=0; i<lessonsClass.length; i++){
     makeButton(lessonClass[i].id, i);
   }
-  //to be replaced by the introduction refresh function
-  /*
-  hideAll();
   
-  map = new google.maps.Map(document.getElementById('map-canvas-initial'), {
-    zoom: 12,
-    center: new google.maps.LatLng(-33.8683, 151.2086),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  });
-  
-  document.getElementById("map-canvas-initial").style.display = "block";
-  */
+  //create refresh button
+  var button = document.getElementById("buttons");
+  button.innerHTML = button.innerHTML + "<input type=\"button\" id=\"refresh\" value=\"refresh\" onclick=\"refresh()\"></input><br>"
+  var buttonProp = document.getElementById("refresh");
+  buttonSyle (buttonProp, lessonsClass.length);
+
+  //Set the initial page to be introduction
+  lessonArray[0].refresh;
 });
 
 function makeButton(string, i){
-  var button = document.getElementById("
+  var button = document.getElementById("buttons");
+  button.innerHTML = button.innerHTML + "<input type=\"button\" id=" +string + "value=" + string + "onclick=\"lessonArray[i].update\"></input><br>";
+  var buttonProp = document.getElementById(string);
+  buttonSyle (buttonProp, i);
 }
 
+function buttonStyle(buttonProp, i){
+  buttonProp.style.background-color = 'yellow';
+  buttonProp.style.width = '150px';
+  buttonProp.style.height = '40px';
+  buttonProp.style.font-size = '25px';
+  buttonProp.style.opacity = 0.8;
+  buttonProp.style.font-weight = 'bold';
+  buttonProp.onmouseover = function(){
+    buttonProp.style.background-color = color[i%color.length];
+    buttonProp.style.color = white;
+  }
+}
 
+//UPDATE THIS!
 function refresh(){
   if(document.title == "Marker Events"){
     buttonMarker();
