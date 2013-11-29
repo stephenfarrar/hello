@@ -1,15 +1,27 @@
 var mapGeo = 0;
 var mapMarker = 0;
 var map = 0;
+var activeTitle;
 var iconColours = [
   "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
   "http://maps.google.com/mapfiles/ms/icons/green-dot.png"];
+//find the lessons
+var lessonsClass = document.getElementByClassName("lesson");
+
 
 google.maps.event.addDomListener(window, 'load', function initialize() {
+  //CREATING BUTTONS
+  
+  for (var i=0; i<lessonsClass.length; i++){
+    makeButton(lessonClass[i].id, i);
+  }
+  //to be replaced by the introduction refresh function
+  /*
   hideAll();
+  
   map = new google.maps.Map(document.getElementById('map-canvas-initial'), {
     zoom: 12,
     center: new google.maps.LatLng(-33.8683, 151.2086),
@@ -17,8 +29,13 @@ google.maps.event.addDomListener(window, 'load', function initialize() {
   });
   
   document.getElementById("map-canvas-initial").style.display = "block";
-  
+  */
 });
+
+function makeButton(string, i){
+  var button = document.getElementById("
+}
+
 
 function refresh(){
   if(document.title == "Marker Events"){
@@ -30,20 +47,21 @@ function refresh(){
     document.getElementById("map-canvas-initial").style.display = "block";
   }
 }
+
+//BLOCKING ALL DIVS AUTOMATICALLY
 function hideAll() {
-  document.getElementById("query").style.display = "none";
-  document.getElementById("logGeo").style.display = "none";
-  document.getElementById("logMarker").style.display = "none";
-  document.getElementById("map-canvas-marker").style.display = "none";
-  document.getElementById("map-canvas-geo").style.display = "none";
-  document.getElementById("map-canvas-initial").style.display = "none";
+  for (var i=0; i<lessonsClass.length; i++){
+    document.getElementById(lessonsClass[i].id).style.display = "none";
+  }
 }
+
+
 //function to update marker
 function updateMarker(){
   hideAll();
   if (mapMarker === 0) {
      document.getElementById("map-canvas-marker").style.display = "block";
-    buttonMarker();
+     refreshMarker();
   } else {
     document.title = "Marker Events";
     document.getElementById("logMarker").style.display = "block";
@@ -55,7 +73,7 @@ function updateMarker(){
 }
 
 //function to refresh marker
-function buttonMarker(){
+function refreshMarker(){
   
   mapMarker = new google.maps.Map(document.getElementById('map-canvas-marker'), {
     zoom: 12,
@@ -137,7 +155,7 @@ function updateGeo(){
 }
 
 //function to refresh Geo
-function geoButton(){
+function refreshGeo(){
   mapGeo = new google.maps.Map(document.getElementById('map-canvas-geo'), {
     zoom: 12,
     center: new google.maps.LatLng(-33.8683, 151.2086),
